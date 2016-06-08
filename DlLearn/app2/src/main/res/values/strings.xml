@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="demo_app_name">阅读新时空</string>
+    <string name="demo_hello_world">这是子独立的apk插件信息!</string>
+    <string name="action_settings">Settings</string>
+
+</resources>

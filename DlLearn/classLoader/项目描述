@@ -1,0 +1,44 @@
+1，这个是 插件化，开始的demo
+
+
+06-08 15:37:13.558   Context的类加载加载器:java.lang.BootClassLoader@2df43673
+06-08 15:37:13.558   ListView的类加载器:java.lang.BootClassLoader@2df43673
+
+
+
+06-08 15:37:13.559   应用程序默认加载器:dalvik.system.PathClassLoader[DexPathList[[zip file "/data/app/com.cyg.learn.classloader-1/base.apk"],nativeLibraryDirectories=[/vendor/lib, /system/lib]]]
+
+
+06-08 15:37:13.559   系统类加载器:dalvik.system.PathClassLoader[DexPathList[[directory "."],nativeLibraryDirectories=[/vendor/lib, /system/lib]]]
+系统类加载器其实还是PathClassLoader，只是加载的apk路径不是/data/app/xxx.apk了，而是系统apk的路径：/system/app/xxx.apk
+
+
+
+06-08 15:37:13.559   系统类加载器和Context的类加载器是否相等:false
+06-08 15:37:13.559   系统类加载器和应用程序默认加载器是否相等:false
+
+
+06-08 15:37:13.559   打印应用程序默认加载器的委派机制:
+06-08 15:37:13.559   类加载器:dalvik.system.PathClassLoader[DexPathList[[zip file "/data/app/com.cyg.learn.classloader-1/base.apk"],nativeLibraryDirectories=[/vendor/lib, /system/lib]]]
+06-08 15:37:13.560   类加载器:java.lang.BootClassLoader@2df43673
+
+
+06-08 15:37:13.560   打印系统加载器的委派机制:
+06-08 15:37:13.560   类加载器:dalvik.system.PathClassLoader[DexPathList[[directory "."],nativeLibraryDirectories=[/vendor/lib, /system/lib]]]
+06-08 15:37:13.560   类加载器:java.lang.BootClassLoader@2df43673
+
+2，最基本的换皮肤操作 插件
+
+2-1 首先，加载外部的apk dex 等都是使用的是DexClassLoader，
+而Android的PathClassLoader是只能加载 /data/app/ 目录下的 即已经安装的
+
+
+2-2 资源，即 主apk如何访问插件的apk资源，
+
+利用AssetManager策略，拿到Resource对象即可，
+
+
+
+=====  Android加载外部apk dex 时， 如何保持activity的生命周期呢？
+1，
+
