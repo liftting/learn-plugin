@@ -3,10 +3,12 @@
     package="com.cyg.learn" >
 
     <application
+        android:debuggable="true"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/demo_app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:name=".TestApplication">
         <activity
             android:name=".TestActivity"
             android:label="@string/demo_app_name" >
@@ -16,6 +18,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".OneActivity">
+
+        </activity>
+
+        <activity android:name=".TwoActivity">
+
+
+        </activity>
+
     </application>
 
 </manifest>

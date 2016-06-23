@@ -40,5 +40,11 @@
 
 
 =====  Android加载外部apk dex 时， 如何保持activity的生命周期呢？
+
+我们知道PathClassLoader是一个应用的默认加载器(而且他只能加载data/app/xxx.apk的文件)，但是我们加载插件一般使用DexClassLoader加载器，所以这里就有问题了，
+其实如果对于开始的时候，每个人都会认为很简单，很容易想到使用DexClassLoader来加载Activity获取到class对象，在使用Intent启动，这个很简单呀？
+但是实际上并不是想象的这么简单。原因很简单，因为Android中的四大组件都有一个特点就是他们有自己的启动流程和生命周期，我们使用DexClassLoader加载进来的Activity是不会涉及到任何启动流程和生命周期的概念，
+说白了，他就是一个普普通通的类。所以启动肯定会出错。
+
 1，
 
