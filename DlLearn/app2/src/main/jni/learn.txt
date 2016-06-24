@@ -1,0 +1,16 @@
+1,java 和 c 是如何互通的，
+不能互通原因主要是数据类型的问题，
+jni 通过 转换，  jstring -- String -- c char*
+
+2，如何将 java 传入的 String 参数转换为 c 的 char*,然后使用?
+java 传入的 String 参数,在 c 文件中被 jni 转换为 jstring 的数据类型,在 c 文件中声明
+
+
+char* test,
+然后 test = (char*)(*env)->GetStringUTFChars(env, jstring, NULL);
+注意:test 使用完后,通知虚拟机平台相关代码无需再访问:
+(*env)->ReleaseStringUTFChars(env, jstring, test);
+
+3， 将c 中的char* 的buffer传给java
+
+
