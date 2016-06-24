@@ -15,6 +15,30 @@ extern "C" {
 JNIEXPORT jstring JNICALL Java_com_cyg_learn_HelloJni_getName
   (JNIEnv *, jobject, jstring);
 
+/*
+ * Class:     com_cyg_learn_HelloJni
+ * Method:    getArray
+ * Signature: ()[Ljava/lang/String;
+ */
+JNIEXPORT jobjectArray JNICALL Java_com_cyg_learn_HelloJni_getArray
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_cyg_learn_HelloJni
+ * Method:    getResult
+ * Signature: ()Lcom/cyg/learn/ScanResult;
+ */
+JNIEXPORT jobject JNICALL Java_com_cyg_learn_HelloJni_getResult
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_cyg_learn_HelloJni
+ * Method:    getArrayList
+ * Signature: ()Ljava/util/ArrayList;
+ */
+JNIEXPORT jobject JNICALL Java_com_cyg_learn_HelloJni_getArrayList
+  (JNIEnv *, jobject);
+
 #ifdef __cplusplus
 }
 #endif
