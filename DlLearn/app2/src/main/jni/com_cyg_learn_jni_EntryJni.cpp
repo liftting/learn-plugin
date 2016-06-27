@@ -18,7 +18,7 @@
 // 获取数组的大小
 # define NELEM(x) ((int) (sizeof(x) / sizeof((x)[0])))
 // 指定要注册的类，对应完整的java类名
-#define JNIREG_CLASS "com/droider/crackme0201/TestApplication"
+#define JNIREG_CLASS "com/cyg/learn/entry/EntryApplication"
 //Function  Statements
 
 // char 的字符转换成jstring
@@ -134,18 +134,20 @@ void exec_get_dex( JNIEnv* env,jobject obj,jobject context )
     jstring jcmd = CharConvertJstring(env,cmd);
 
 
+    LOGI("jni_protect:beging to get runtime");
     jclass runtime = env->FindClass("java/lang/Runtime");
     jmethodID runtime_func = env->GetStaticMethodID(runtime,"getRuntime","()Ljava/lang/Runtime;");
     jobject exec_runtime_obj = env->CallStaticObjectMethod(runtime,runtime_func);// 拿到实例对象，用于执行函数的，
     jclass runtime_java_class = env->GetObjectClass(exec_runtime_obj); // 拿到类的对象，查找函数的
 
-
+    LOGI("jni_protect:begin to get runtime process");
     // 在从runtime的内部内，里面执行得到Process
     jmethodID exec_process_func = env->GetMethodID(runtime_java_class,"exec","(Ljava/lang/String;)Ljava/lang/Process;");
-    jobject process_obj = env->CallObjectMethod(exec_runtime_obj,exec_process_func);
+    jobject process_obj = env->CallObjectMethod(exec_runtime_obj,exec_process_func,jcmd);
     jclass process_java_class = env->GetObjectClass(process_obj); // 拿到Process的类字节，class
 
 
+    LOGI("jni_protect:begin to invoke waitfor ");
     // 3 执行 waitFor() 方法
     jmethodID waitfor_func = env->GetMethodID(process_java_class,"waitFor","()I");
     jint waitfor_result = env->CallIntMethod(process_obj,waitfor_func);
@@ -153,7 +155,7 @@ void exec_get_dex( JNIEnv* env,jobject obj,jobject context )
 
 
     //
-
+    LOGI("jni_protect:begin to write dex file");
     write_dex_file(env,obj,context);
 
 
@@ -165,6 +167,8 @@ void write_dex_file(JNIEnv* env,jobject obj,jobject context) {
     jclass native_clazz2 = env->GetObjectClass(context);
     jmethodID methodID_func2 = env->GetMethodID(native_clazz2,"getPackageName", "()Ljava/lang/String;");
     jstring packagename2 =(jstring)(env->CallObjectMethod(context, methodID_func2));
+
+    LOGI("jni_protect:has get the packageName,and begin to create path");
     const char *str2 = env->GetStringUTFChars(packagename2, 0);
     char destination2[128];
     const char *blank2 ="/data/data/", *c2 = "/.cache/classdex.jar";
@@ -176,7 +180,7 @@ void write_dex_file(JNIEnv* env,jobject obj,jobject context) {
     env->ReleaseStringUTFChars(packagename2, str2);
     jstring jdestination = CharConvertJstring(env,destination2); // 写的目的地， /data/data/packagename/.cache/classdex.jar
 
-
+    LOGI("jni_protect:begint to get ApplicationInfo");
     jmethodID methodID_getApplicationInfo = env->GetMethodID(native_clazz2,"getApplicationInfo", "()Landroid/content/pm/ApplicationInfo;");
     //
     jobject ApplicationInfo =env->CallObjectMethod(context, methodID_getApplicationInfo);
@@ -185,6 +189,7 @@ void write_dex_file(JNIEnv* env,jobject obj,jobject context) {
 
     jfieldID JarFieldId = env->GetFieldID(cls_ApplicationInfo,"publicSourceDir", "Ljava/lang/String;"); //
 
+    LOGI("jni_protect:begint to get public sourceDir");
     jstring SourceDir =(jstring)(env->GetObjectField(ApplicationInfo,JarFieldId)); // 获得publicSourceDir路径
         const char *strs = env->GetStringUTFChars(SourceDir, 0);
         char destinations[128];
@@ -202,6 +207,7 @@ void write_dex_file(JNIEnv* env,jobject obj,jobject context) {
         jmethodID methodID_JarFile = env->GetMethodID(cls_JarFile,"<init>", "(Ljava/lang/String;)V");
     jobject localJarFile = env->NewObject(cls_JarFile, methodID_JarFile,SourceDir);
 
+LOGI("jni_protect:begint to get Entry ZipEntry");
         //localjarFile getEntry method
         jmethodID methodID_getentry = env->GetMethodID(cls_JarFile,"getEntry", "(Ljava/lang/String;)Ljava/util/zip/ZipEntry;");
         jobject LocalZipEntry = env->CallObjectMethod(localJarFile,methodID_getentry,jclassdex_jar);
@@ -209,25 +215,33 @@ void write_dex_file(JNIEnv* env,jobject obj,jobject context) {
         jmethodID methodID_getInputStream = env->GetMethodID(cls_JarFile,"getInputStream", "(Ljava/util/zip/ZipEntry;)Ljava/io/InputStream;");
         jobject BufferinputstreamParam = env->CallObjectMethod(localJarFile,methodID_getInputStream,LocalZipEntry); // 构建 ErickyProtect.so的流
 
+LOGI("jni_protect:begint to get File");
         //new a File class
         jclass cls_File = env->FindClass("java/io/File");
         jmethodID methodID_File = env->GetMethodID(cls_File,"<init>", "(Ljava/lang/String;)V");
         jobject localFile = env->NewObject(cls_File, methodID_File,jdestination);
 
+LOGI("jni_protect:begint to get BufferedInputStream");
         //new  BufferedInputStream
         jclass cls_BufferedInputStream = env->FindClass("java/io/BufferedInputStream");
         jmethodID methodID_BufferedInputStream = env->GetMethodID(cls_BufferedInputStream,"<init>", "(Ljava/io/InputStream;)V");
         jobject localBufferedInputStream = env->NewObject(cls_BufferedInputStream, methodID_BufferedInputStream,BufferinputstreamParam);
         //new FileoutputStream
 
+LOGI("jni_protect:begint to get FileOutputStream");
         jclass cls_FileOutputStream = env->FindClass("java/io/FileOutputStream");
         jmethodID methodID_FileOutputStream= env->GetMethodID(cls_FileOutputStream,"<init>", "(Ljava/io/File;)V");
         jobject BufferoutputstreamParam = env->NewObject(cls_FileOutputStream, methodID_FileOutputStream,localFile);
 
+
+LOGI("jni_protect:begint to get BufferedOutputStream");
         //new BufferedOutputStream
         jclass cls_BufferedOutputStream = env->FindClass("java/io/BufferedOutputStream");
         jmethodID methodID_BufferedOutputStream = env->GetMethodID(cls_BufferedOutputStream,"<init>", "(Ljava/io/OutputStream;)V");
         jobject localBufferedOutputStream = env->NewObject(cls_BufferedOutputStream, methodID_BufferedOutputStream,BufferoutputstreamParam);
+
+        LOGI("jni_protect:has get BufferedOutStream class success,begin to get methodID");
+
         //some preparations
         jmethodID methodID_write = env->GetMethodID(cls_BufferedOutputStream,"write", "([BII)V");
         jmethodID methodID_read = env->GetMethodID(cls_BufferedInputStream,"read", "([B)I");
@@ -235,6 +249,7 @@ void write_dex_file(JNIEnv* env,jobject obj,jobject context) {
         jmethodID output_close = env->GetMethodID(cls_BufferedOutputStream,"close", "()V");
         jmethodID input_close = env->GetMethodID(cls_BufferedInputStream,"close", "()V");
 
+LOGI("jni_protect:begint to write file stream");
         while(true){
             jint i =env->CallIntMethod(localBufferedInputStream,methodID_read,bytes); // 从so 中读取数据，然后写到
             if (i <= 0){
@@ -247,6 +262,7 @@ void write_dex_file(JNIEnv* env,jobject obj,jobject context) {
             LOGI("afterwrite %d",i);
 
         }
+        LOGI("jni_protect:end to write all");
 
 }
 

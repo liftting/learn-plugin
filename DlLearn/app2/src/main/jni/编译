@@ -1,8 +1,24 @@
 
-将java 的class文件编译出.h的头文件
-
+1,将java 的class文件编译出.h的头文件
 
  javah -classpath ./build/intermediates/classes/debug -d ./src/main/jni/ -jni com.cyg.learn.jni.LearnJni
+
+2,如果默认编译不出来.class文件，我们手动编译
+cd java的文件目录下
+
+javac LearnJni
+
+生成 LearnJni.class文件
+
+然后使用javah命令，但是要注意了，因为java的包名存在，
+我们需要到java的目录下，即保证其子目录下是以 包名为文件夹来创建的，
+
+localhost:java wm$ javah -classpath ./ -d ./ -jni com.cyg.learn.jni.LearnJni
+localhost:java wm$ pwd
+/Users/wm/git-code/learn-plugin/DlLearn/app2/src/main/java
+
+
+
 
 
 
