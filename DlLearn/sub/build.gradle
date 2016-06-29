@@ -10,6 +10,17 @@ android {
         targetSdkVersion 19
         versionCode 1
         versionName "1.0"
+
+        ndk {
+            moduleName "helloJni"
+        }
+
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
     }
     buildTypes {
         release {

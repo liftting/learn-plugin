@@ -11,7 +11,9 @@ public class TestApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+    }
 
+    public void init() {
 
     }
 }

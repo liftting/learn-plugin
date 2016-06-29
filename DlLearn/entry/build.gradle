@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.cyg.learn"
+        applicationId "com.cyg.learn.entry"
         minSdkVersion 8
         targetSdkVersion 23
         versionCode 1
@@ -16,18 +16,21 @@ android {
         }
 
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            assets.srcDirs = ['src/main/assets']
+        }
+    }
+
     buildTypes {
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets {
-        main {
-            res.srcDirs = ['src/main/res']
-            jniLibs.srcDirs = ['libs']
-        }
-    }
+
 
 }
 

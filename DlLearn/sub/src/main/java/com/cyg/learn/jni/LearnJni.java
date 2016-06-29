@@ -5,6 +5,10 @@ package com.cyg.learn.jni;
  */
 public class LearnJni {
 
+    static {
+        System.loadLibrary("helloJni");
+    }
+
     public native void actionString(String prompt);
 
     public native static void actionStringSt(String name);

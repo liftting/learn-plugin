@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/app2" />
             <option value="$PROJECT_DIR$/classLoader" />
+            <option value="$PROJECT_DIR$/entry" />
             <option value="$PROJECT_DIR$/force" />
             <option value="$PROJECT_DIR$/sub" />
           </set>
