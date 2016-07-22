@@ -1,1 +1,1 @@
-include ':app', ':sub', ':force', ':app2', ':addShell', ':classLoader', ':entry'
+include ':app', ':sub', ':force', ':app2', ':addShell', ':classLoader', ':entry', ':survivalApp'

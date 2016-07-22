@@ -6,7 +6,7 @@
 2,如果默认编译不出来.class文件，我们手动编译
 cd java的文件目录下
 
-javac LearnJni
+javac com/cyg/learn/jni/LearnJni
 
 生成 LearnJni.class文件
 

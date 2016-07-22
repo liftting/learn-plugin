@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/entry" />
             <option value="$PROJECT_DIR$/force" />
             <option value="$PROJECT_DIR$/sub" />
+            <option value="$PROJECT_DIR$/survivalApp" />
           </set>
         </option>
       </GradleProjectSettings>

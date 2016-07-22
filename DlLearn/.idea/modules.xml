@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/entry/entry.iml" filepath="$PROJECT_DIR$/entry/entry.iml" />
       <module fileurl="file://$PROJECT_DIR$/force/force.iml" filepath="$PROJECT_DIR$/force/force.iml" />
       <module fileurl="file://$PROJECT_DIR$/sub/sub.iml" filepath="$PROJECT_DIR$/sub/sub.iml" />
+      <module fileurl="file://$PROJECT_DIR$/survivalApp/survivalApp.iml" filepath="$PROJECT_DIR$/survivalApp/survivalApp.iml" />
     </modules>
   </component>
 </project>
