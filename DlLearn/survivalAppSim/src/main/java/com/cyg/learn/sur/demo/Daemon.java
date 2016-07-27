@@ -18,7 +18,7 @@ public class Daemon {
     private static final String BIN_DIR_NAME = "bin";
     private static final String DAEMON_BIN_NAME = "daemon";
 
-    public static final int INTERVAL_ONE_MINUTE = 60;
+    public static final int INTERVAL_ONE_MINUTE = 10;
     public static final int INTERVAL_ONE_HOUR = 3600;
 
     /**

@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
 		exit(EXIT_SUCCESS);
 	}
 	else if (pid == 0)
-	{
+	{ //创建了子进程
 		/* add signal */
 		signal(SIGTERM, sigterm_handler);
 
